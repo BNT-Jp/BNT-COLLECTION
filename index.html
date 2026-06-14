@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>BNT Prompt System</title>
+<title>BNT Prompt UX</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -10,12 +10,17 @@
 
 <div class="card">
 
-  <div class="title" id="title">Loading...</div>
-  <div class="subtitle">BNT Prompt Engine</div>
+  <div class="title">BNT PROMPT SYSTEM</div>
 
-  <button id="copyBtn" onclick="copyPrompt()" disabled>
+  <button id="copyBtn" onclick="copyPrompt()">
     COPY PROMPT
   </button>
+
+  <!-- コピー後に出る案内 -->
+  <div id="guide" class="guide">
+    コピーしました。<br>
+    ChatGPTを開いて貼り付け、そのまま実行してください。
+  </div>
 
   <button id="openBtn" onclick="openGPT()">
     OPEN CHATGPT
