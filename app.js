@@ -1,39 +1,42 @@
-let config = null;
+let jsonData = null;
 
+// JSON読み込み
 fetch("./prompt.json")
   .then(res => res.json())
   .then(data => {
-
-    config = data;
-
-    // UIテキスト全部JSONから取得
-    document.getElementById("copyBtn").innerText =
-      config.ui.copyLabel;
-
-    document.getElementById("openBtn").innerText =
-      config.ui.openLabel;
-
+    jsonData = data;
+  })
+  .catch(err => {
+    console.error("JSON load error", err);
   });
 
-// コピー
-function copyPrompt(){
+// 👇全部コピー
+function copyJSON(){
 
-  navigator.clipboard.writeText(config.prompt).then(()=>{
+  if(!jsonData){
+    alert("JSONまだ読み込まれてない");
+    return;
+  }
 
-    document.getElementById("toast").innerText =
-      config.messages.toast;
+  const text = JSON.stringify(jsonData, null, 2);
 
-    document.getElementById("toast").classList.add("show");
+  navigator.clipboard.writeText(text).then(()=>{
 
-    document.getElementById("guide").innerText =
-      config.messages.guide;
+    const toast = document.getElementById("toast");
+    const guide = document.getElementById("guide");
 
-    document.getElementById("guide").style.display = "block";
+    toast.innerText = "COPIED ✔ FULL JSON";
+    toast.classList.add("show");
+
+    guide.innerText =
+      "コピー完了。\nChatGPTに貼り付けて実行してください。";
+
+    guide.style.display = "block";
 
     document.getElementById("openBtn").style.display = "block";
 
     setTimeout(()=>{
-      document.getElementById("toast").classList.remove("show");
+      toast.classList.remove("show");
     },1200);
 
   });
@@ -42,5 +45,5 @@ function copyPrompt(){
 
 // ChatGPTを開く
 function openGPT(){
-  window.open(config.actions.chatgptUrl, "_blank");
+  window.open("https://chat.openai.com", "_blank");
 }
