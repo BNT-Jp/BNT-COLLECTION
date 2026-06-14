@@ -1,2 +1,1 @@
-# bf-generator
 # BNT-COLLECTION
