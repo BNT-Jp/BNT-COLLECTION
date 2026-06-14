@@ -2,89 +2,22 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>BNT Copy → Open GPT</title>
-
-<style>
-body{
-  background:#0b0b10;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  font-family:sans-serif;
-  color:#fff;
-  margin:0;
-}
-
-.card{
-  width:380px;
-  padding:22px;
-  border-radius:18px;
-  background:linear-gradient(145deg,#1a1a1a,#0f0f0f);
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
-  text-align:center;
-}
-
-.title{
-  font-size:18px;
-  font-weight:bold;
-  margin-bottom:15px;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:10px;
-}
-
-.copy-btn{
-  background:#00c853;
-  color:#fff;
-}
-
-.copy-btn:hover{
-  background:#00e676;
-}
-
-.gpt-btn{
-  background:#1e88e5;
-  color:#fff;
-  display:none;
-}
-
-.gpt-btn:hover{
-  background:#42a5f5;
-}
-
-.toast{
-  margin-top:10px;
-  font-size:12px;
-  color:#00e676;
-  opacity:0;
-  transition:0.3s;
-}
-
-.toast.show{
-  opacity:1;
-}
-</style>
+<title>BNT Prompt System</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="card">
 
-  <div class="title">BNT Prompt Engine</div>
+  <div class="title" id="title">Loading...</div>
+  <div class="subtitle">BNT Prompt Engine</div>
 
-  <button class="copy-btn" onclick="copyPrompt()">
+  <button id="copyBtn" onclick="copyPrompt()" disabled>
     COPY PROMPT
   </button>
 
-  <button id="gptBtn" class="gpt-btn" onclick="openGPT()">
+  <button id="openBtn" onclick="openGPT()">
     OPEN CHATGPT
   </button>
 
@@ -92,40 +25,6 @@ button{
 
 </div>
 
-<script>
-
-// コピーする中身（JSONでもOKにできる）
-const promptText =
-`BNT=GayMalePsychologyAnalyzer+IrresistibleManDesigner;
-VERSION=2.0;
-GOAL=Viral(SelfInsert+Shareable+Memorable);`;
-
-function copyPrompt(){
-
-  navigator.clipboard.writeText(promptText).then(()=>{
-
-    const toast = document.getElementById("toast");
-    const gptBtn = document.getElementById("gptBtn");
-
-    // トースト表示
-    toast.classList.add("show");
-
-    // GPTボタン表示
-    gptBtn.style.display = "block";
-
-    setTimeout(()=>{
-      toast.classList.remove("show");
-    },1200);
-
-  });
-
-}
-
-function openGPT(){
-  window.open("https://chat.openai.com", "_blank");
-}
-
-</script>
-
+<script src="app.js"></script>
 </body>
 </html>
