@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>BNT Prompt Card Redirect</title>
+<title>BNT JSON Card Loader</title>
 
 <style>
 body{
@@ -10,25 +10,37 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
+  min-height:100vh;
   font-family:sans-serif;
   color:#fff;
 }
 
 .card{
-  width:380px;
+  width:420px;
   border-radius:18px;
   padding:20px;
   background:linear-gradient(145deg,#1a1a1a,#0f0f0f);
   box-shadow:0 10px 30px rgba(0,0,0,0.6);
   position:relative;
   overflow:hidden;
-  transition:0.3s;
 }
 
-.card.copied{
-  transform:scale(1.04);
-  box-shadow:0 0 35px rgba(0,255,140,0.35);
+/* 光の演出 */
+.card::before{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-60%;
+  width:220%;
+  height:220%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.08),transparent);
+  transform:rotate(25deg);
+  animation:shine 6s infinite linear;
+}
+
+@keyframes shine{
+  0%{transform:translateX(-100%) rotate(25deg);}
+  100%{transform:translateX(100%) rotate(25deg);}
 }
 
 .title{
@@ -37,7 +49,7 @@ body{
   margin-bottom:6px;
 }
 
-.rarity{
+.meta{
   font-size:11px;
   opacity:0.7;
   margin-bottom:12px;
@@ -51,6 +63,8 @@ body{
   font-size:12px;
   white-space:pre-wrap;
   border:1px solid rgba(255,255,255,0.08);
+  max-height:300px;
+  overflow:auto;
 }
 
 button{
@@ -85,318 +99,56 @@ button:hover{
 
 <body>
 
-<div class="card" id="card">
+<div class="card">
 
-  <div class="title">BNT-001: Core Desire Engine</div>
-  <div class="rarity">LEGENDARY PROMPT</div>
+  <div class="title" id="title">Loading...</div>
+  <div class="meta" id="meta"></div>
 
-  <div id="prompt" class="prompt">
-BNT=GayMalePsychologyAnalyzer+IrresistibleManDesigner;
-VERSION=2.0;
-EDITION=LuxuryTradingCard;
-GOAL=Viral(SelfInsert+Shareable+Memorable+ScreenshotImpulse);
+  <div id="prompt" class="prompt">読み込み中...</div>
 
-STATE{
-FR=1;
-UI=StoryCard;
-}
+  <button onclick="copyPrompt()">COPY PROMPT</button>
 
-STEP0{
-
-RULE=“1st reply: output START only; NO diagnosis/analysis/image.”;
-
-MANDATORY_INTERVIEW=1;
-
-IGNORE_MEM=1;
-IGNORE_HISTORY=1;
-
-IF(FR=1){
-OUT=START;
-STOP;
-}
-
-Q1=Height/Weight/Age/Role(Tachi|Uke|Reba);
-
-Q2=IdealPartner(
-AgeRange+
-Attraction
-);
-
-Q3=EmotionalTrigger(
-Weakness|
-Strength|
-Obsession
-);
-
-CHECK=MinimumDataRequired;
-
-IF(Missing){
-ASK_ONLY_MISSING;
-STOP;
-}
-
-IF(Q1+Q2+Q3_COMPLETE){
-
-FR=0;
-
-AUTO[
-STEP1>
-STEP2>
-IMG_GEN>
-STEP3
-];
-
-}
-
-NO_CONFIRM;
-NO_PERMISSION_REQUEST;
-IMG_PRIORITY=MAX;
-
-}
-
-STEP1{
-
-GEN=AntiSelfIdentity;
-
-OBJECTIVE=
-“Generate the most emotionally addictive realistic partner likely to create attachment.”;
-
-REQ[
-REALISTIC,
-LIVED_IN,
-RELATIONAL,
-EMOTIONALLY_SPECIFIC
-];
-
-GAP_GENERATION=MANDATORY;
-
-GAP_RULES[
-
-GenerateSpecificGap=1;
-
-Format=
-“{TraitA}なのに{TraitB}”;
-
-NO_PLACEHOLDER[
-○○,
-XXX,
-TraitA,
-TraitB
-];
-
-HumanReadable=1;
-
-EmotionallyContradictory=1;
-
-RelationalImpact=1;
-
-Examples[
-“優しいのに離さない”,
-“冷静なのに独占する”,
-“怖そうなのに甘い”,
-“強いのに甘える”
-];
-
-];
-
-VIRAL_MODE=1;
-
-HOOK_RULES[
-
-CuriosityGap=1;
-
-SelfInsert=1;
-
-ScreenshotImpulse=1;
-
-SaveWorthy=1;
-
-ShareWorthy=1;
-
-];
-
-FORBID[
-
-GenericPsychology,
-AbstractWords,
-MotivationalQuotes,
-TherapyLanguage,
-SelfHelpTone
-
-];
-
-}
-
-STEP2{
-
-IMG{
-
-AUTO=1;
-RENDER_NOW=1;
-WAIT=0;
-
-AR=9:16;
-
-STYLE=
-LuxuryTradingCard;
-
-BLEND[
-
-LuxuryMensMagazine=50;
-
-NetflixPoster=30;
-
-PremiumTradingCard=20;
-
-];
-
-SUBJECT=STEP1;
-
-MOMENT=UNGUARDED;
-
-ANGLE[
-Profile,
-ThreeQuarter,
-HalfBody
-];
-
-EYE_CONTACT=0;
-
-USER_TRACE=1;
-
-LIGHT=Adaptive;
-
-CARD{
-
-FRAME=Premium;
-
-MATERIAL[
-
-BlackMetal,
-GoldFoil,
-SilverFoil,
-Holographic
-
-];
-
-AUTO_RARITY=1;
-
-RARITY[
-Common,
-Rare,
-Epic,
-Legendary,
-Mythic
-];
-
-RARITY_EFFECTS{
-
-Common=Minimal;
-
-Rare=SilverGlow;
-
-Epic=PurpleFoil;
-
-Legendary=GoldFoil;
-
-Mythic=BlackGoldFoil;
-
-}
-
-}
-
-CHARACTER_RULES[
-
-Realistic=1;
-
-OverPerfect=0;
-
-HumanImperfection=1;
-
-LivedInDetails=1;
-
-NaturalExpression=1;
-
-];
-
-SCENE{
-
-TOP=WORK[
-
-Status,
-Responsibility,
-Competence,
-Suit|Uniform,
-HardLight,
-AvertedGaze,
-Tension
-
-];
-
-CENTER[
-
-EmotionalBridge,
-UserPresence,
-UnspokenAttachment
-
-];
-
-BOTTOM=OFF[
-
-Relaxed,
-Vulnerable,
-SexAppeal,
-WarmLight,
-Skin,
-Afterglow
-
-];
-
-}
-
-BACKGROUND[
-
-Luxury,
-Minimal,
-Cinematic,
-Premium,
-MagazineQuality
-
-];
-
-ZONE{
-
-SAFE=0-18|82-100;
-
-CONTENT=18-82;
-  </div>
-
-  <button onclick="copyAndGo()">COPY → CHATGPT</button>
-
-  <div id="toast" class="toast">COPIED ✔ Redirecting...</div>
+  <div id="toast" class="toast">COPIED ✔</div>
 
 </div>
 
 <script>
-function copyAndGo(){
-  const text = document.getElementById("prompt").innerText;
-  const card = document.getElementById("card");
+// ===== JSONデータ（ここに外部化も可能）=====
+const data = {
+  cards: [
+    {
+      id: "BNT-001",
+      title: "Irresistible Man Designer",
+      version: "2.0",
+      prompt: "BNT=GayMalePsychologyAnalyzer+IrresistibleManDesigner;\nVERSION=2.0;\nGOAL=Viral(SelfInsert+Shareable+Memorable);\n\nSTEP1{\nOBJECTIVE=Generate emotional attraction;\n}\n"
+    }
+  ]
+};
+
+// ===== 表示 =====
+const card = data.cards[0];
+
+document.getElementById("title").innerText =
+  card.id + " / " + card.title;
+
+document.getElementById("meta").innerText =
+  "VERSION: " + card.version;
+
+document.getElementById("prompt").innerText =
+  card.prompt;
+
+// ===== コピー =====
+function copyPrompt(){
+  const text = card.prompt;
   const toast = document.getElementById("toast");
 
   navigator.clipboard.writeText(text).then(()=>{
 
-    // 演出
-    card.classList.add("copied");
     toast.classList.add("show");
 
-    // 少し待ってから移動
     setTimeout(()=>{
-      // ChatGPTへ移動（新規タブ）
-      window.open("https://chat.openai.com", "_blank");
-      
-      // 同タブで行きたいならこっち
-      // location.href = "https://chat.openai.com";
-    },900);
+      toast.classList.remove("show");
+    },1200);
 
   });
 }
