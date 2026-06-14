@@ -1,48 +1,35 @@
-let currentPrompt = "";
+let config = null;
 
-// JSON読み込み
 fetch("./prompt.json")
-  .then(res => {
-    if (!res.ok) throw new Error("JSON読み込み失敗");
-    return res.json();
-  })
+  .then(res => res.json())
   .then(data => {
 
-    const card = data.cards[0];
+    config = data;
 
-    // 👇ここが重要（存在チェック）
-    if(!card || !card.prompt){
-      throw new Error("promptが存在しない");
-    }
+    // UIテキスト全部JSONから取得
+    document.getElementById("copyBtn").innerText =
+      config.ui.copyLabel;
 
-    currentPrompt = card.prompt;
+    document.getElementById("openBtn").innerText =
+      config.ui.openLabel;
 
-    document.getElementById("title").innerText =
-      card.title || "NO TITLE";
-
-    document.getElementById("copyBtn").disabled = false;
-
-  })
-  .catch(err => {
-    console.error(err);
-
-    document.getElementById("title").innerText =
-      "LOAD ERROR (JSON not found)";
   });
 
 // コピー
 function copyPrompt(){
 
-  if(!currentPrompt){
-    alert("プロンプトが読み込まれていません");
-    return;
-  }
+  navigator.clipboard.writeText(config.prompt).then(()=>{
 
-  navigator.clipboard.writeText(currentPrompt).then(()=>{
+    document.getElementById("toast").innerText =
+      config.messages.toast;
 
     document.getElementById("toast").classList.add("show");
 
+    document.getElementById("guide").innerText =
+      config.messages.guide;
+
     document.getElementById("guide").style.display = "block";
+
     document.getElementById("openBtn").style.display = "block";
 
     setTimeout(()=>{
@@ -55,5 +42,5 @@ function copyPrompt(){
 
 // ChatGPTを開く
 function openGPT(){
-  window.open("https://chat.openai.com", "_blank");
+  window.open(config.actions.chatgptUrl, "_blank");
 }
