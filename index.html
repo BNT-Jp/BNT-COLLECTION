@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>BNT JSON Card</title>
+<title>BNT Hidden Prompt Copier</title>
 
 <style>
 body{
@@ -16,39 +16,23 @@ body{
 }
 
 .card{
-  width:420px;
-  border-radius:18px;
+  width:360px;
   padding:20px;
+  border-radius:18px;
   background:linear-gradient(145deg,#1a1a1a,#0f0f0f);
   box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  text-align:center;
 }
 
 .title{
   font-size:18px;
   font-weight:bold;
-  margin-bottom:6px;
-}
-
-.meta{
-  font-size:11px;
-  opacity:0.7;
-  margin-bottom:12px;
-  color:#00e676;
-}
-
-.prompt{
-  background:rgba(0,0,0,0.4);
-  padding:12px;
-  border-radius:10px;
-  font-size:12px;
-  white-space:pre-wrap;
-  border:1px solid rgba(255,255,255,0.08);
+  margin-bottom:10px;
 }
 
 button{
-  margin-top:12px;
   width:100%;
-  padding:10px;
+  padding:12px;
   border:none;
   border-radius:10px;
   background:#00c853;
@@ -62,7 +46,7 @@ button:hover{
 }
 
 .toast{
-  margin-top:8px;
+  margin-top:10px;
   font-size:12px;
   color:#00e676;
   opacity:0;
@@ -79,10 +63,7 @@ button:hover{
 
 <div class="card">
 
-  <div class="title" id="title">Loading...</div>
-  <div class="meta" id="meta"></div>
-
-  <div class="prompt" id="prompt">Loading prompt...</div>
+  <div class="title" id="title">BNT Card</div>
 
   <button onclick="copyPrompt()">COPY PROMPT</button>
 
@@ -92,32 +73,27 @@ button:hover{
 
 <script>
 
-let currentText = "";
+// ===== JSONデータ（裏で保持）=====
+const data = {
+  cards: [
+    {
+      id: "BNT-001",
+      title: "Core Desire Engine",
+      prompt: "BNT=EmotionalArchitectureEngine;TYPE=AttractionModel;TRAIT=Strong×Silent×ControlledHeat;GOAL=UnforgettablePresence;OUTPUT=ViralPsychologicalHook;"
+    }
+  ]
+};
 
-// ===== JSON読み込み（ここが本体）=====
-fetch("prompt.json")
-  .then(res => res.json())
-  .then(data => {
+// 表示は最小限
+document.getElementById("title").innerText =
+  data.cards[0].id + " / " + data.cards[0].title;
 
-    const card = data.cards[0];
-
-    document.getElementById("title").innerText =
-      card.id + " / " + card.title;
-
-    document.getElementById("meta").innerText =
-      "VERSION: " + card.version;
-
-    document.getElementById("prompt").innerText =
-      card.prompt;
-
-    currentText = card.prompt;
-  });
-
-// ===== コピー =====
+// コピー本体
 function copyPrompt(){
+  const text = data.cards[0].prompt;
   const toast = document.getElementById("toast");
 
-  navigator.clipboard.writeText(currentText).then(()=>{
+  navigator.clipboard.writeText(text).then(()=>{
 
     toast.classList.add("show");
 
