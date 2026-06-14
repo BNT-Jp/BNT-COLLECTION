@@ -7,7 +7,7 @@ body{
   font-family:sans-serif;
   color:#fff;
 
-  /* 背景を少し“深い宇宙感”へ */
+  /* 宇宙っぽい深み背景 */
   background:
     radial-gradient(circle at 20% 20%, #1b2a4a 0%, transparent 40%),
     radial-gradient(circle at 80% 80%, #2a1b3d 0%, transparent 40%),
@@ -19,7 +19,7 @@ body{
   padding:26px;
   border-radius:20px;
 
-  /* 高級感アップ */
+  /* 高級感 */
   background:linear-gradient(145deg,#1b1b1f,#0e0e12);
 
   box-shadow:
@@ -28,12 +28,10 @@ body{
 
   text-align:center;
 
-  /* 浮遊感 */
   transform:translateY(0);
   transition:0.3s ease;
 }
 
-/* ホバーで軽く浮く */
 .card:hover{
   transform:translateY(-4px);
 }
@@ -42,6 +40,7 @@ body{
   font-size:18px;
   font-weight:700;
   letter-spacing:0.5px;
+  margin-bottom:6px;
 }
 
 .subtitle{
@@ -51,7 +50,7 @@ body{
   letter-spacing:0.3px;
 }
 
-/* 共通ボタン */
+/* ===== ボタン共通 ===== */
 button{
   width:100%;
   padding:12px;
@@ -66,7 +65,7 @@ button{
   overflow:hidden;
 }
 
-/* 光が流れる演出 */
+/* 光エフェクト */
 button::after{
   content:"";
   position:absolute;
@@ -88,7 +87,7 @@ button:hover::after{
   transform:translateX(40%) rotate(25deg);
 }
 
-/* COPYボタン */
+/* ===== COPYボタン ===== */
 #copyBtn{
   background:#00c853;
   color:#fff;
@@ -100,7 +99,7 @@ button:hover::after{
   box-shadow:0 12px 25px rgba(0,200,83,0.4);
 }
 
-/* OPENボタン */
+/* ===== OPENボタン ===== */
 #openBtn{
   background:#1e88e5;
   color:#fff;
@@ -113,14 +112,14 @@ button:hover::after{
   box-shadow:0 12px 25px rgba(30,136,229,0.4);
 }
 
-/* 無効状態 */
+/* ===== 無効状態 ===== */
 button:disabled{
   background:#333;
   cursor:not-allowed;
   box-shadow:none;
 }
 
-/* トースト */
+/* ===== コピー完了トースト ===== */
 .toast{
   margin-top:14px;
   font-size:12px;
@@ -133,4 +132,30 @@ button:disabled{
 .toast.show{
   opacity:1;
   transform:translateY(0);
+}
+
+/* ===== 👇追加：コピー後の案内文 ===== */
+.guide{
+  font-size:12px;
+  line-height:1.6;
+  color:#cfcfcf;
+  opacity:0.85;
+  margin-top:12px;
+  margin-bottom:6px;
+
+  display:none;
+
+  animation:fadeIn 0.4s ease forwards;
+}
+
+/* フェードイン */
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(6px);
+  }
+  to{
+    opacity:0.85;
+    transform:translateY(0);
+  }
 }
