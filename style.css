@@ -1,55 +1,83 @@
 body{
   margin:0;
-  height:100vh;
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   font-family:sans-serif;
-  background:#0b0b10;
   color:#fff;
+
+  background:
+    radial-gradient(circle at 20% 20%, #1b2a4a 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, #2a1b3d 0%, transparent 40%),
+    #0b0b10;
+
+  padding:20px; /* ←スマホ余白 */
+  box-sizing:border-box;
 }
 
+/* ===== カード（ここが重要） ===== */
 .card{
-  width:380px;
-  padding:26px;
-  border-radius:18px;
+  width:min(92vw, 420px);  /* ←神ポイント */
+  padding:24px;
+  border-radius:20px;
+
   background:linear-gradient(145deg,#1b1b1f,#0e0e12);
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+
   text-align:center;
-  box-shadow:0 20px 50px rgba(0,0,0,0.7);
+
+  transition:0.3s ease;
+}
+
+/* PCだけホバー有効 */
+@media (hover:hover){
+  .card:hover{
+    transform:translateY(-4px);
+  }
 }
 
 .title{
-  font-size:18px;
+  font-size:clamp(16px, 4vw, 20px);
   font-weight:700;
 }
 
 .subtitle{
-  font-size:12px;
+  font-size:clamp(11px, 3vw, 13px);
   opacity:0.6;
-  margin-bottom:20px;
+  margin-bottom:18px;
 }
 
+/* ボタン */
 button{
   width:100%;
-  padding:12px;
-  margin-top:10px;
+  padding:14px;
   border:none;
-  border-radius:10px;
-  font-weight:bold;
+  border-radius:12px;
+  font-weight:700;
   cursor:pointer;
+  margin-top:10px;
+
+  font-size:clamp(13px, 3.5vw, 15px);
 }
 
+/* COPY */
 #copyBtn{
   background:#00c853;
   color:#fff;
 }
 
+/* OPEN */
 #openBtn{
   background:#1e88e5;
   color:#fff;
   display:none;
 }
 
+/* トースト */
 .toast{
   margin-top:12px;
   font-size:12px;
@@ -62,6 +90,7 @@ button{
   opacity:1;
 }
 
+/* ガイド */
 .guide{
   font-size:12px;
   margin-top:10px;
