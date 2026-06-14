@@ -1,6 +1,6 @@
 let currentPrompt = "";
 
-// ===== JSON読み込み =====
+// JSON読み込み
 fetch("prompt.json")
   .then(res => res.json())
   .then(data => {
@@ -13,22 +13,23 @@ fetch("prompt.json")
     currentPrompt = card.prompt;
 
     document.getElementById("copyBtn").disabled = false;
-  })
-  .catch(err => {
-    document.getElementById("title").innerText = "LOAD FAILED";
-    console.error(err);
   });
 
-// ===== コピー =====
+// コピー
 function copyPrompt(){
 
   if(!currentPrompt) return;
 
   const toast = document.getElementById("toast");
+  const openBtn = document.getElementById("openBtn");
 
   navigator.clipboard.writeText(currentPrompt).then(()=>{
 
+    // トースト表示
     toast.classList.add("show");
+
+    // コピー成功でボタン表示
+    openBtn.style.display = "block";
 
     setTimeout(()=>{
       toast.classList.remove("show");
@@ -37,7 +38,7 @@ function copyPrompt(){
   });
 }
 
-// ===== ChatGPTを開く =====
+// ChatGPTを開く
 function openGPT(){
   window.open("https://chat.openai.com", "_blank");
 }
