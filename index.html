@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>BNT Prompt Copier</title>
+<title>BNT Copy → Open GPT</title>
 
 <style>
 body{
@@ -28,13 +28,7 @@ body{
 .title{
   font-size:18px;
   font-weight:bold;
-  margin-bottom:6px;
-}
-
-.subtitle{
-  font-size:12px;
-  opacity:0.6;
-  margin-bottom:20px;
+  margin-bottom:15px;
 }
 
 button{
@@ -42,24 +36,32 @@ button{
   padding:12px;
   border:none;
   border-radius:10px;
-  background:#00c853;
-  color:#fff;
   font-weight:bold;
   cursor:pointer;
-  font-size:14px;
+  margin-top:10px;
 }
 
-button:hover{
+.copy-btn{
+  background:#00c853;
+  color:#fff;
+}
+
+.copy-btn:hover{
   background:#00e676;
 }
 
-button:disabled{
-  background:#333;
-  cursor:not-allowed;
+.gpt-btn{
+  background:#1e88e5;
+  color:#fff;
+  display:none;
+}
+
+.gpt-btn:hover{
+  background:#42a5f5;
 }
 
 .toast{
-  margin-top:12px;
+  margin-top:10px;
   font-size:12px;
   color:#00e676;
   opacity:0;
@@ -76,11 +78,14 @@ button:disabled{
 
 <div class="card">
 
-  <div class="title" id="title">Loading...</div>
-  <div class="subtitle">Prompt is hidden (secure copy mode)</div>
+  <div class="title">BNT Prompt Engine</div>
 
-  <button id="copyBtn" onclick="copyPrompt()" disabled>
+  <button class="copy-btn" onclick="copyPrompt()">
     COPY PROMPT
+  </button>
+
+  <button id="gptBtn" class="gpt-btn" onclick="openGPT()">
+    OPEN CHATGPT
   </button>
 
   <div id="toast" class="toast">COPIED ✔</div>
@@ -89,47 +94,35 @@ button:disabled{
 
 <script>
 
-let currentPrompt = "";
+// コピーする中身（JSONでもOKにできる）
+const promptText =
+`BNT=GayMalePsychologyAnalyzer+IrresistibleManDesigner;
+VERSION=2.0;
+GOAL=Viral(SelfInsert+Shareable+Memorable);`;
 
-// ===== JSON読み込み =====
-fetch("prompt.json")
-  .then(res => res.json())
-  .then(data => {
-
-    const card = data.cards[0];
-
-    // 表示はタイトルだけ
-    document.getElementById("title").innerText =
-      card.id + " / " + card.title;
-
-    // コピー用データ保存
-    currentPrompt = card.prompt;
-
-    // ボタン有効化
-    document.getElementById("copyBtn").disabled = false;
-  })
-  .catch(err => {
-    document.getElementById("title").innerText = "Load failed";
-    console.error(err);
-  });
-
-// ===== コピー処理 =====
 function copyPrompt(){
 
-  if(!currentPrompt) return;
+  navigator.clipboard.writeText(promptText).then(()=>{
 
-  const toast = document.getElementById("toast");
+    const toast = document.getElementById("toast");
+    const gptBtn = document.getElementById("gptBtn");
 
-  navigator.clipboard.writeText(currentPrompt)
-    .then(() => {
+    // トースト表示
+    toast.classList.add("show");
 
-      toast.classList.add("show");
+    // GPTボタン表示
+    gptBtn.style.display = "block";
 
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 1200);
+    setTimeout(()=>{
+      toast.classList.remove("show");
+    },1200);
 
-    });
+  });
+
+}
+
+function openGPT(){
+  window.open("https://chat.openai.com", "_blank");
 }
 
 </script>
