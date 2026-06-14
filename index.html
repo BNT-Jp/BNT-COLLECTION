@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>BNT JSON Card Loader</title>
+<title>BNT JSON Card</title>
 
 <style>
 body{
@@ -10,7 +10,7 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  min-height:100vh;
+  height:100vh;
   font-family:sans-serif;
   color:#fff;
 }
@@ -21,26 +21,6 @@ body{
   padding:20px;
   background:linear-gradient(145deg,#1a1a1a,#0f0f0f);
   box-shadow:0 10px 30px rgba(0,0,0,0.6);
-  position:relative;
-  overflow:hidden;
-}
-
-/* 光の演出 */
-.card::before{
-  content:"";
-  position:absolute;
-  top:-60%;
-  left:-60%;
-  width:220%;
-  height:220%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.08),transparent);
-  transform:rotate(25deg);
-  animation:shine 6s infinite linear;
-}
-
-@keyframes shine{
-  0%{transform:translateX(-100%) rotate(25deg);}
-  100%{transform:translateX(100%) rotate(25deg);}
 }
 
 .title{
@@ -63,8 +43,6 @@ body{
   font-size:12px;
   white-space:pre-wrap;
   border:1px solid rgba(255,255,255,0.08);
-  max-height:300px;
-  overflow:auto;
 }
 
 button{
@@ -104,7 +82,7 @@ button:hover{
   <div class="title" id="title">Loading...</div>
   <div class="meta" id="meta"></div>
 
-  <div id="prompt" class="prompt">読み込み中...</div>
+  <div class="prompt" id="prompt">Loading prompt...</div>
 
   <button onclick="copyPrompt()">COPY PROMPT</button>
 
@@ -113,36 +91,33 @@ button:hover{
 </div>
 
 <script>
-// ===== JSONデータ（ここに外部化も可能）=====
-const data = {
-  cards: [
-    {
-      id: "BNT-001",
-      title: "Irresistible Man Designer",
-      version: "2.0",
-      prompt: "BNT=GayMalePsychologyAnalyzer+IrresistibleManDesigner;\nVERSION=2.0;\nGOAL=Viral(SelfInsert+Shareable+Memorable);\n\nSTEP1{\nOBJECTIVE=Generate emotional attraction;\n}\n"
-    }
-  ]
-};
 
-// ===== 表示 =====
-const card = data.cards[0];
+let currentText = "";
 
-document.getElementById("title").innerText =
-  card.id + " / " + card.title;
+// ===== JSON読み込み（ここが本体）=====
+fetch("prompt.json")
+  .then(res => res.json())
+  .then(data => {
 
-document.getElementById("meta").innerText =
-  "VERSION: " + card.version;
+    const card = data.cards[0];
 
-document.getElementById("prompt").innerText =
-  card.prompt;
+    document.getElementById("title").innerText =
+      card.id + " / " + card.title;
+
+    document.getElementById("meta").innerText =
+      "VERSION: " + card.version;
+
+    document.getElementById("prompt").innerText =
+      card.prompt;
+
+    currentText = card.prompt;
+  });
 
 // ===== コピー =====
 function copyPrompt(){
-  const text = card.prompt;
   const toast = document.getElementById("toast");
 
-  navigator.clipboard.writeText(text).then(()=>{
+  navigator.clipboard.writeText(currentText).then(()=>{
 
     toast.classList.add("show");
 
@@ -152,6 +127,7 @@ function copyPrompt(){
 
   });
 }
+
 </script>
 
 </body>
