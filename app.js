@@ -25,7 +25,7 @@ function copyJSON(){
     const toast = document.getElementById("toast");
     const guide = document.getElementById("guide");
 
-    toast.innerText = "COPIED ✔ FULL JSON";
+    toast.innerText = "COPIED ✔ FULL PROMPT";
     toast.classList.add("show");
 
     guide.innerText =
