@@ -1,34 +1,21 @@
-let currentPrompt = "";
+const promptText =
+`BNT=GayMalePsychologyAnalyzer+IrresistibleManDesigner;
+VERSION=2.0;
+GOAL=Viral(SelfInsert+Shareable+Memorable);`;
 
-// JSON読み込み
-fetch("prompt.json")
-  .then(res => res.json())
-  .then(data => {
-
-    const card = data.cards[0];
-
-    document.getElementById("title").innerText =
-      card.id + " / " + card.title;
-
-    currentPrompt = card.prompt;
-
-    document.getElementById("copyBtn").disabled = false;
-  });
-
-// コピー
 function copyPrompt(){
 
-  if(!currentPrompt) return;
+  navigator.clipboard.writeText(promptText).then(()=>{
 
-  const toast = document.getElementById("toast");
-  const openBtn = document.getElementById("openBtn");
+    const guide = document.getElementById("guide");
+    const openBtn = document.getElementById("openBtn");
+    const toast = document.getElementById("toast");
 
-  navigator.clipboard.writeText(currentPrompt).then(()=>{
-
-    // トースト表示
+    // トースト
     toast.classList.add("show");
 
-    // コピー成功でボタン表示
+    // UX表示
+    guide.style.display = "block";
     openBtn.style.display = "block";
 
     setTimeout(()=>{
@@ -36,9 +23,9 @@ function copyPrompt(){
     },1200);
 
   });
+
 }
 
-// ChatGPTを開く
 function openGPT(){
   window.open("https://chat.openai.com", "_blank");
 }
