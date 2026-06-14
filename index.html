@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Prompt System</title>
+<title>BNT JSON COPY</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -10,19 +10,21 @@
 
 <div class="card">
 
-  <div class="title">BNT PROMPT SYSTEM</div>
+  <div class="title">BNT JSON SYSTEM</div>
 
-  <button id="copyBtn" onclick="copyPrompt()">
-    COPY
+  <div class="subtitle">Click to copy full prompt JSON</div>
+
+  <button id="copyBtn" onclick="copyJSON()">
+    COPY FULL JSON
   </button>
 
-  <div id="guide" class="guide"></div>
-
   <button id="openBtn" onclick="openGPT()">
-    OPEN
+    OPEN CHATGPT
   </button>
 
   <div id="toast" class="toast"></div>
+
+  <div id="guide" class="guide"></div>
 
 </div>
 
