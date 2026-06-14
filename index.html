@@ -1,1 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>BNT Prompt Cards</title>
 
+<style>
+body{
+  background:#0b0b0f;
+  font-family: sans-serif;
+  display:flex;
+  justify-content:center;
+  padding:40px;
+  color:#fff;
+}
+
+/* ===== CARD BASE ===== */
+.card{
+  width:360px;
+  border-radius:18px;
+  padding:18px;
+  margin:10px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  transition:0.3s;
+}
+
+/* hover glow */
+.card:hover{
+  transform:translateY(-5px) scale(1.02);
+}
+
+/* ===== RARITY ===== */
+.common{ background:linear-gradient(145deg,#2a2a2a,#1a1a1a); }
+.rare{ background:linear-gradient(145deg,#1b2a4a,#0f172a); }
+.epic{ background:linear-gradient(145deg,#3b1b4a,#1a0f2a); }
+.legendary{ background:linear-gradient(145deg,#4a3b1b,#2a1f0f); }
+.mythic{
+  background:linear-gradient(145deg,#3a003f,#120015);
+  box-shadow:0 0 25px rgba(255,0,200,0.25);
+}
+
+/* animated shine */
+.card::before{
+  content:"";
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.08),transparent);
+  transform:rotate(25deg);
+  animation:shine 5s infinite linear;
+}
+
+@keyframes shine{
+  0%{transform:translateX(-100%) rotate(25deg);}
+  100%{transform:translateX(100%) rotate(25deg);}
+}
+
+/* ===== TEXT ===== */
+.title{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.rarity{
+  font-size:11px;
+  opacity:0.8;
+  margin-bottom:10px;
+}
+
+.prompt{
+  font-size:12px;
+  background:rgba(0,0,0,0.4);
+  padding:10px;
+  border-radius:10px;
+  white-space:pre-wrap;
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+/* ===== BUTTON ===== */
+button{
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+  background:#00c853;
+  color:#fff;
+}
+
+button:hover{
+  background:#00e676;
+}
+
+.toast{
+  font-size:12px;
+  margin-top:8px;
+  color:#00e676;
+  display:none;
+}
+
+.container{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- COMMON -->
+  <div class="card common">
+    <div class="title">BNT-001: Quiet Desire</div>
+    <div class="rarity">COMMON</div>
+
+    <div id="p1" class="prompt">
+BNT=ArchetypeEngine;
+TYPE=Introductory;
+GOAL=SoftEmotion;
+STYLE=Minimal;
+    </div>
+
+    <button onclick="copy('p1','t1')">COPY</button>
+    <div id="t1" class="toast">COPIED</div>
+  </div>
+
+  <!-- RARE -->
+  <div class="card rare">
+    <div class="title">BNT-042: Cold Attraction</div>
+    <div class="rarity">RARE</div>
+
+    <div id="p2" class="prompt">
+BNT=PsychologyCore;
+TYPE=AttractionBias;
+TRAIT=Distance×Curiosity;
+EMOTION=ControlledHeat;
+    </div>
+
+    <button onclick="copy('p2','t2')">COPY</button>
+    <div id="t2" class="toast">COPIED</div>
+  </div>
+
+  <!-- EPIC -->
+  <div class="card epic">
+    <div class="title">BNT-118: Dangerous Comfort</div>
+    <div class="rarity">EPIC</div>
+
+    <div id="p3" class="prompt">
+BNT=EmotionalHookSystem;
+TYPE=AttachmentLoop;
+GAP=Strong×Kind;
+RESULT=AddictiveBond;
+    </div>
+
+    <button onclick="copy('p3','t3')">COPY</button>
+    <div id="t3" class="toast">COPIED</div>
+  </div>
+
+  <!-- LEGENDARY -->
+  <div class="card legendary">
+    <div class="title">BNT-777: Irresistible Man</div>
+    <div class="rarity">LEGENDARY</div>
+
+    <div id="p4" class="prompt">
+BNT=IrresistibleDesigner;
+TYPE=AlphaPresence;
+TRAIT=SilentDominance;
+IMPACT=Unforgettable;
+    </div>
+
+    <button onclick="copy('p4','t4')">COPY</button>
+    <div id="t4" class="toast">COPIED</div>
+  </div>
+
+  <!-- MYTHIC -->
+  <div class="card mythic">
+    <div class="title">BNT-999: Final Obsession</div>
+    <div class="rarity">MYTHIC</div>
+
+    <div id="p5" class="prompt">
+BNT=DeepAttachmentEngine;
+TYPE=IrreversibleAttraction;
+STATE=EmotionalCollapse;
+OUTPUT=OnlyOneMan;
+    </div>
+
+    <button onclick="copy('p5','t5')">COPY</button>
+    <div id="t5" class="toast">COPIED</div>
+  </div>
+
+</div>
+
+<script>
+function copy(pid, tid){
+  const text = document.getElementById(pid).innerText;
+
+  navigator.clipboard.writeText(text).then(()=>{
+    const toast = document.getElementById(tid);
+    toast.style.display="block";
+
+    setTimeout(()=>{
+      toast.style.display="none";
+    },1200);
+  });
+}
+</script>
+
+</body>
+</html>
