@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>BNT Hidden Prompt Copier</title>
+<title>BNT Prompt Copier</title>
 
 <style>
 body{
@@ -13,11 +13,12 @@ body{
   height:100vh;
   font-family:sans-serif;
   color:#fff;
+  margin:0;
 }
 
 .card{
-  width:360px;
-  padding:20px;
+  width:380px;
+  padding:22px;
   border-radius:18px;
   background:linear-gradient(145deg,#1a1a1a,#0f0f0f);
   box-shadow:0 10px 30px rgba(0,0,0,0.6);
@@ -27,7 +28,13 @@ body{
 .title{
   font-size:18px;
   font-weight:bold;
-  margin-bottom:10px;
+  margin-bottom:6px;
+}
+
+.subtitle{
+  font-size:12px;
+  opacity:0.6;
+  margin-bottom:20px;
 }
 
 button{
@@ -39,14 +46,20 @@ button{
   color:#fff;
   font-weight:bold;
   cursor:pointer;
+  font-size:14px;
 }
 
 button:hover{
   background:#00e676;
 }
 
+button:disabled{
+  background:#333;
+  cursor:not-allowed;
+}
+
 .toast{
-  margin-top:10px;
+  margin-top:12px;
   font-size:12px;
   color:#00e676;
   opacity:0;
@@ -63,9 +76,12 @@ button:hover{
 
 <div class="card">
 
-  <div class="title" id="title">BNT Card</div>
+  <div class="title" id="title">Loading...</div>
+  <div class="subtitle">Prompt is hidden (secure copy mode)</div>
 
-  <button onclick="copyPrompt()">COPY PROMPT</button>
+  <button id="copyBtn" onclick="copyPrompt()" disabled>
+    COPY PROMPT
+  </button>
 
   <div id="toast" class="toast">COPIED ✔</div>
 
@@ -73,35 +89,47 @@ button:hover{
 
 <script>
 
-// ===== JSONデータ（裏で保持）=====
-const data = {
-  cards: [
-    {
-      id: "BNT-001",
-      title: "Core Desire Engine",
-      prompt: "BNT=EmotionalArchitectureEngine;TYPE=AttractionModel;TRAIT=Strong×Silent×ControlledHeat;GOAL=UnforgettablePresence;OUTPUT=ViralPsychologicalHook;"
-    }
-  ]
-};
+let currentPrompt = "";
 
-// 表示は最小限
-document.getElementById("title").innerText =
-  data.cards[0].id + " / " + data.cards[0].title;
+// ===== JSON読み込み =====
+fetch("prompt.json")
+  .then(res => res.json())
+  .then(data => {
 
-// コピー本体
+    const card = data.cards[0];
+
+    // 表示はタイトルだけ
+    document.getElementById("title").innerText =
+      card.id + " / " + card.title;
+
+    // コピー用データ保存
+    currentPrompt = card.prompt;
+
+    // ボタン有効化
+    document.getElementById("copyBtn").disabled = false;
+  })
+  .catch(err => {
+    document.getElementById("title").innerText = "Load failed";
+    console.error(err);
+  });
+
+// ===== コピー処理 =====
 function copyPrompt(){
-  const text = data.cards[0].prompt;
+
+  if(!currentPrompt) return;
+
   const toast = document.getElementById("toast");
 
-  navigator.clipboard.writeText(text).then(()=>{
+  navigator.clipboard.writeText(currentPrompt)
+    .then(() => {
 
-    toast.classList.add("show");
+      toast.classList.add("show");
 
-    setTimeout(()=>{
-      toast.classList.remove("show");
-    },1200);
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1200);
 
-  });
+    });
 }
 
 </script>
