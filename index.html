@@ -2,64 +2,35 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>BNT Prompt Cards</title>
+<title>BNT Prompt Card Redirect</title>
 
 <style>
 body{
-  background:#0b0b0f;
-  font-family: sans-serif;
+  background:#0b0b10;
   display:flex;
   justify-content:center;
-  padding:40px;
+  align-items:center;
+  height:100vh;
+  font-family:sans-serif;
   color:#fff;
 }
 
-/* ===== CARD BASE ===== */
 .card{
-  width:360px;
+  width:380px;
   border-radius:18px;
-  padding:18px;
-  margin:10px;
+  padding:20px;
+  background:linear-gradient(145deg,#1a1a1a,#0f0f0f);
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
   position:relative;
   overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
   transition:0.3s;
 }
 
-/* hover glow */
-.card:hover{
-  transform:translateY(-5px) scale(1.02);
+.card.copied{
+  transform:scale(1.04);
+  box-shadow:0 0 35px rgba(0,255,140,0.35);
 }
 
-/* ===== RARITY ===== */
-.common{ background:linear-gradient(145deg,#2a2a2a,#1a1a1a); }
-.rare{ background:linear-gradient(145deg,#1b2a4a,#0f172a); }
-.epic{ background:linear-gradient(145deg,#3b1b4a,#1a0f2a); }
-.legendary{ background:linear-gradient(145deg,#4a3b1b,#2a1f0f); }
-.mythic{
-  background:linear-gradient(145deg,#3a003f,#120015);
-  box-shadow:0 0 25px rgba(255,0,200,0.25);
-}
-
-/* animated shine */
-.card::before{
-  content:"";
-  position:absolute;
-  top:-50%;
-  left:-50%;
-  width:200%;
-  height:200%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.08),transparent);
-  transform:rotate(25deg);
-  animation:shine 5s infinite linear;
-}
-
-@keyframes shine{
-  0%{transform:translateX(-100%) rotate(25deg);}
-  100%{transform:translateX(100%) rotate(25deg);}
-}
-
-/* ===== TEXT ===== */
 .title{
   font-size:18px;
   font-weight:bold;
@@ -68,30 +39,30 @@ body{
 
 .rarity{
   font-size:11px;
-  opacity:0.8;
-  margin-bottom:10px;
+  opacity:0.7;
+  margin-bottom:12px;
+  color:#00e676;
 }
 
 .prompt{
-  font-size:12px;
   background:rgba(0,0,0,0.4);
-  padding:10px;
+  padding:12px;
   border-radius:10px;
+  font-size:12px;
   white-space:pre-wrap;
   border:1px solid rgba(255,255,255,0.08);
 }
 
-/* ===== BUTTON ===== */
 button{
-  margin-top:10px;
+  margin-top:12px;
   width:100%;
   padding:10px;
   border:none;
   border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
   background:#00c853;
   color:#fff;
+  font-weight:bold;
+  cursor:pointer;
 }
 
 button:hover{
@@ -99,117 +70,334 @@ button:hover{
 }
 
 .toast{
-  font-size:12px;
   margin-top:8px;
+  font-size:12px;
   color:#00e676;
-  display:none;
+  opacity:0;
+  transition:0.3s;
 }
 
-.container{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
+.toast.show{
+  opacity:1;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="card" id="card">
 
-  <!-- COMMON -->
-  <div class="card common">
-    <div class="title">BNT-001: Quiet Desire</div>
-    <div class="rarity">COMMON</div>
+  <div class="title">BNT-001: Core Desire Engine</div>
+  <div class="rarity">LEGENDARY PROMPT</div>
 
-    <div id="p1" class="prompt">
-BNT=ArchetypeEngine;
-TYPE=Introductory;
-GOAL=SoftEmotion;
-STYLE=Minimal;
-    </div>
+  <div id="prompt" class="prompt">
+BNT=GayMalePsychologyAnalyzer+IrresistibleManDesigner;
+VERSION=2.0;
+EDITION=LuxuryTradingCard;
+GOAL=Viral(SelfInsert+Shareable+Memorable+ScreenshotImpulse);
 
-    <button onclick="copy('p1','t1')">COPY</button>
-    <div id="t1" class="toast">COPIED</div>
+STATE{
+FR=1;
+UI=StoryCard;
+}
+
+STEP0{
+
+RULE=“1st reply: output START only; NO diagnosis/analysis/image.”;
+
+MANDATORY_INTERVIEW=1;
+
+IGNORE_MEM=1;
+IGNORE_HISTORY=1;
+
+IF(FR=1){
+OUT=START;
+STOP;
+}
+
+Q1=Height/Weight/Age/Role(Tachi|Uke|Reba);
+
+Q2=IdealPartner(
+AgeRange+
+Attraction
+);
+
+Q3=EmotionalTrigger(
+Weakness|
+Strength|
+Obsession
+);
+
+CHECK=MinimumDataRequired;
+
+IF(Missing){
+ASK_ONLY_MISSING;
+STOP;
+}
+
+IF(Q1+Q2+Q3_COMPLETE){
+
+FR=0;
+
+AUTO[
+STEP1>
+STEP2>
+IMG_GEN>
+STEP3
+];
+
+}
+
+NO_CONFIRM;
+NO_PERMISSION_REQUEST;
+IMG_PRIORITY=MAX;
+
+}
+
+STEP1{
+
+GEN=AntiSelfIdentity;
+
+OBJECTIVE=
+“Generate the most emotionally addictive realistic partner likely to create attachment.”;
+
+REQ[
+REALISTIC,
+LIVED_IN,
+RELATIONAL,
+EMOTIONALLY_SPECIFIC
+];
+
+GAP_GENERATION=MANDATORY;
+
+GAP_RULES[
+
+GenerateSpecificGap=1;
+
+Format=
+“{TraitA}なのに{TraitB}”;
+
+NO_PLACEHOLDER[
+○○,
+XXX,
+TraitA,
+TraitB
+];
+
+HumanReadable=1;
+
+EmotionallyContradictory=1;
+
+RelationalImpact=1;
+
+Examples[
+“優しいのに離さない”,
+“冷静なのに独占する”,
+“怖そうなのに甘い”,
+“強いのに甘える”
+];
+
+];
+
+VIRAL_MODE=1;
+
+HOOK_RULES[
+
+CuriosityGap=1;
+
+SelfInsert=1;
+
+ScreenshotImpulse=1;
+
+SaveWorthy=1;
+
+ShareWorthy=1;
+
+];
+
+FORBID[
+
+GenericPsychology,
+AbstractWords,
+MotivationalQuotes,
+TherapyLanguage,
+SelfHelpTone
+
+];
+
+}
+
+STEP2{
+
+IMG{
+
+AUTO=1;
+RENDER_NOW=1;
+WAIT=0;
+
+AR=9:16;
+
+STYLE=
+LuxuryTradingCard;
+
+BLEND[
+
+LuxuryMensMagazine=50;
+
+NetflixPoster=30;
+
+PremiumTradingCard=20;
+
+];
+
+SUBJECT=STEP1;
+
+MOMENT=UNGUARDED;
+
+ANGLE[
+Profile,
+ThreeQuarter,
+HalfBody
+];
+
+EYE_CONTACT=0;
+
+USER_TRACE=1;
+
+LIGHT=Adaptive;
+
+CARD{
+
+FRAME=Premium;
+
+MATERIAL[
+
+BlackMetal,
+GoldFoil,
+SilverFoil,
+Holographic
+
+];
+
+AUTO_RARITY=1;
+
+RARITY[
+Common,
+Rare,
+Epic,
+Legendary,
+Mythic
+];
+
+RARITY_EFFECTS{
+
+Common=Minimal;
+
+Rare=SilverGlow;
+
+Epic=PurpleFoil;
+
+Legendary=GoldFoil;
+
+Mythic=BlackGoldFoil;
+
+}
+
+}
+
+CHARACTER_RULES[
+
+Realistic=1;
+
+OverPerfect=0;
+
+HumanImperfection=1;
+
+LivedInDetails=1;
+
+NaturalExpression=1;
+
+];
+
+SCENE{
+
+TOP=WORK[
+
+Status,
+Responsibility,
+Competence,
+Suit|Uniform,
+HardLight,
+AvertedGaze,
+Tension
+
+];
+
+CENTER[
+
+EmotionalBridge,
+UserPresence,
+UnspokenAttachment
+
+];
+
+BOTTOM=OFF[
+
+Relaxed,
+Vulnerable,
+SexAppeal,
+WarmLight,
+Skin,
+Afterglow
+
+];
+
+}
+
+BACKGROUND[
+
+Luxury,
+Minimal,
+Cinematic,
+Premium,
+MagazineQuality
+
+];
+
+ZONE{
+
+SAFE=0-18|82-100;
+
+CONTENT=18-82;
   </div>
 
-  <!-- RARE -->
-  <div class="card rare">
-    <div class="title">BNT-042: Cold Attraction</div>
-    <div class="rarity">RARE</div>
+  <button onclick="copyAndGo()">COPY → CHATGPT</button>
 
-    <div id="p2" class="prompt">
-BNT=PsychologyCore;
-TYPE=AttractionBias;
-TRAIT=Distance×Curiosity;
-EMOTION=ControlledHeat;
-    </div>
-
-    <button onclick="copy('p2','t2')">COPY</button>
-    <div id="t2" class="toast">COPIED</div>
-  </div>
-
-  <!-- EPIC -->
-  <div class="card epic">
-    <div class="title">BNT-118: Dangerous Comfort</div>
-    <div class="rarity">EPIC</div>
-
-    <div id="p3" class="prompt">
-BNT=EmotionalHookSystem;
-TYPE=AttachmentLoop;
-GAP=Strong×Kind;
-RESULT=AddictiveBond;
-    </div>
-
-    <button onclick="copy('p3','t3')">COPY</button>
-    <div id="t3" class="toast">COPIED</div>
-  </div>
-
-  <!-- LEGENDARY -->
-  <div class="card legendary">
-    <div class="title">BNT-777: Irresistible Man</div>
-    <div class="rarity">LEGENDARY</div>
-
-    <div id="p4" class="prompt">
-BNT=IrresistibleDesigner;
-TYPE=AlphaPresence;
-TRAIT=SilentDominance;
-IMPACT=Unforgettable;
-    </div>
-
-    <button onclick="copy('p4','t4')">COPY</button>
-    <div id="t4" class="toast">COPIED</div>
-  </div>
-
-  <!-- MYTHIC -->
-  <div class="card mythic">
-    <div class="title">BNT-999: Final Obsession</div>
-    <div class="rarity">MYTHIC</div>
-
-    <div id="p5" class="prompt">
-BNT=DeepAttachmentEngine;
-TYPE=IrreversibleAttraction;
-STATE=EmotionalCollapse;
-OUTPUT=OnlyOneMan;
-    </div>
-
-    <button onclick="copy('p5','t5')">COPY</button>
-    <div id="t5" class="toast">COPIED</div>
-  </div>
+  <div id="toast" class="toast">COPIED ✔ Redirecting...</div>
 
 </div>
 
 <script>
-function copy(pid, tid){
-  const text = document.getElementById(pid).innerText;
+function copyAndGo(){
+  const text = document.getElementById("prompt").innerText;
+  const card = document.getElementById("card");
+  const toast = document.getElementById("toast");
 
   navigator.clipboard.writeText(text).then(()=>{
-    const toast = document.getElementById(tid);
-    toast.style.display="block";
 
+    // 演出
+    card.classList.add("copied");
+    toast.classList.add("show");
+
+    // 少し待ってから移動
     setTimeout(()=>{
-      toast.style.display="none";
-    },1200);
+      // ChatGPTへ移動（新規タブ）
+      window.open("https://chat.openai.com", "_blank");
+      
+      // 同タブで行きたいならこっち
+      // location.href = "https://chat.openai.com";
+    },900);
+
   });
 }
 </script>
