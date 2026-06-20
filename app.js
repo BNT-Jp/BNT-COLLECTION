@@ -29,7 +29,7 @@ function copyJSON(){
     toast.classList.add("show");
 
     guide.innerText =
-      "コピー完了。\nChatGPTに貼り付けて実行してください。";
+      "コピー完了。\nChatGPTに貼り付け画像生成モードで実行してください。";
 
     guide.style.display = "block";
 
