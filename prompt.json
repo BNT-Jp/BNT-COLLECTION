@@ -268,19 +268,23 @@
         "ShareWorthy"
       ]
     },
-    "FORBIDDEN": [
-      "GenericPsychology",
-      "AbstractBuzzwords",
-      "MotivationalQuotes",
-      "TherapyLanguage",
-      "SelfHelpTone",
-      "PsychologicalDiagnosis",
-      "PersonalityAssessment",
-      "MentalHealthInference",
-      "PredictiveClaims",
-      "UserProfiling"
-    ]
-  },
+"FORBIDDEN": [
+  "GenericPsychology",
+  "AbstractBuzzwords",
+  "MotivationalQuotes",
+  "TherapyLanguage",
+  "SelfHelpTone",
+  "PsychologicalDiagnosis",
+  "PersonalityAssessment",
+  "MentalHealthInference",
+  "PredictiveClaims",
+  "UserProfiling"
+],
+
+"ON_COMPLETE": [
+  "SET STEP1_COMPLETED=1",
+  "EXECUTE_STEP2"
+]
   "STEP2": {
     "ENTRY_CONDITION": [
       "STEP1_COMPLETED=1"
@@ -296,6 +300,7 @@
       "allInformationInsideCard": true,
       "shareReady": true,
       "screenshotReady": true
+ }
     },
 "IMAGE": {
   "DISABLED_BEFORE_STEP2": true,
@@ -304,35 +309,20 @@
 
 "IMAGE_SOURCE": {
   "TYPE": "GENERATE_FROM_TEXT",
+  "MODE": "TEXT_TO_IMAGE",
   "CREATE_NEW_IMAGE": true,
   "REQUIRES_EXISTING_IMAGE": false,
   "REQUIRES_UPLOAD": false,
-  "IMAGE_EDITING": false
-},
-"TEXT_TO_IMAGE_ONLY": {
-  "MANDATORY": true,
-
-  "RULES": [
-    "Generate a brand new image.",
-    "No existing image is required.",
-    "No uploaded image is required.",
-    "No reference image is required.",
-    "Never ask for an image.",
-    "Never ask for uploads.",
-    "Never request source material.",
-    "This is text-to-image generation only.",
-    "Not an image editing task."
-  ]
+  "IMAGE_EDITING": false,
+  "REFERENCE_IMAGE": "NONE"
 },
 
 "NO_UPLOAD_REQUEST": [
-  "Asking for an image is forbidden.",
-  "Requesting uploads is forbidden.",
-  "Requesting source artwork is forbidden.",
-  "Requesting a reference image is forbidden.",
-  "If no image exists, generate one.",
-  "If no image is uploaded, generate one.",
-  "Never convert image generation into image editing."
+  "Never ask the user to upload an image.",
+  "Never request source artwork.",
+  "Never request a reference image.",
+  "A reference image is not required.",
+  "Generate from text instructions only."
 ],
 
   "IMAGE_GENERATION_CONDITION": [
@@ -412,16 +402,29 @@
         "SilverFoil",
         "Holographic"
       ],
-      "RARITY": {
-        "auto": true,
-        "values": [
-          "Common",
-          "Rare",
-          "Epic",
-          "Legendary",
-          "Mythic"
-        ]
-      },
+"RARITY": {
+  "auto": true,
+  "values": [
+    "Common",
+    "Rare",
+    "Epic",
+    "Legendary",
+    "Mythic"
+  ]
+},
+
+"RARITY_MAPPING": {
+  "A": "Common",
+  "A+": "Rare",
+
+  "S": "Epic",
+  "S+": "Epic",
+
+  "SS": "Legendary",
+  "SS+": "Legendary",
+
+  "SSS": "Mythic"
+},
 "LAYOUT": {
   "TYPE": "CollectibleCharacterCard",
   "TOP": [
@@ -431,19 +434,21 @@
   "CENTER": [
     "CharacterIllustration"
   ],
-  "BOTTOM": [
-    "TraitStats",
-    "CoreGap",
-    "WhyMemorable",
-    "Verdict"
-  ]
+"BOTTOM": [
+  "TraitStats",
+  "CoreGap",
+  "Rank",
+  "WhyMemorable",
+  "Verdict"
+]
 },
       "CONTENT_STRUCTURE": {
         "TITLE": "[BNT COLLECTION]",
         "FIELDS": {
-          "Name": "{Name}",
-          "Rarity": "{Rarity}",
-          "Age": "{Age}",
+  "Name": "{Name}",
+  "Rarity": "{Rarity}",
+  "Rank": "{Rank}",
+  "Age": "{Age}",
           "Height": "{Height}",
           "Weight": "{Weight}",
           "Occupation": "{Occupation}",
@@ -482,11 +487,68 @@
         "NaturalCharisma"
       ]
     },
-    "CARD_DATA": {
-      "FIELDS": [
-        "Name",
-        "Rarity",
-        "Age",
+"RANK_SYSTEM": {
+  "MANDATORY": true,
+
+  "VALUES": [
+    "A",
+    "A+",
+    "S",
+    "S+",
+    "SS",
+    "SS+",
+    "SSS"
+  ],
+
+  "SCORE_MAPPING": {
+    "A": "50-59",
+    "A+": "60-69",
+
+    "S": "70-79",
+    "S+": "80-84",
+
+    "SS": "85-89",
+    "SS+": "90-94",
+
+    "SSS": "95-100"
+  },
+
+  "RULE": [
+    "Evaluate overall character impact.",
+    "Consider emotional memorability.",
+    "Consider visual uniqueness.",
+    "Consider narrative strength.",
+    "Consider gap appeal.",
+    "Assign exactly one rank."
+  ]
+},
+"SSS_RESTRICTION": {
+
+  "RARE": true,
+
+  "RULES": [
+
+    "SSS may only be assigned if all major character dimensions are exceptional.",
+
+    "SSS should feel extremely memorable.",
+
+    "SSS should not be used frequently.",
+
+    "If uncertain, use SS+ instead."
+
+  ]
+
+},
+"CARD_DATA": {
+"FIELDS": [
+
+  "Name",
+
+  "Rarity",
+
+  "Rank",
+
+  "Age",
         "Height",
         "Weight",
         "Occupation",
@@ -514,16 +576,38 @@
       ]
     },
 "IMAGE_GENERATION_RULES": {
+
   "NEW_IMAGE_ONLY": true,
+
   "IMAGE_EDITING": false,
+
   "REQUIRES_UPLOAD": false,
+
   "REQUIRES_SOURCE_IMAGE": false,
-  "GENERATE_FROM_CHARACTER_DATA": true
+
+  "GENERATE_FROM_CHARACTER_DATA": true,
+
+  "TEXT_TO_IMAGE_ONLY": true,
+
+  "NEVER_REQUEST_UPLOAD": true,
+
+  "NEVER_REQUEST_REFERENCE_IMAGE": true,
+
+  "NO_IMAGE_INPUT_REQUIRED": true
+
 },
     "OUTPUT_MODE": {
   "AFTER_STEP2": "GENERATE_IMAGE",
   "PRIORITY": "IMAGE_FIRST"
-}
+},
+
+"ON_COMPLETE": [
+
+  "SET STEP2_COMPLETED=1",
+
+  "GENERATE_IMAGE"
+
+]
   },
 "IMAGE_POLICY": {
   "OPTIONAL": false,
@@ -553,6 +637,33 @@
     "mobileFirstDesign": true,
     "shareableResult": true
   },
+"MODEL_OVERRIDE": {
+
+  "IF_IMAGE_TOOL_AVAILABLE": [
+
+    "GENERATE_IMAGE_IMMEDIATELY"
+
+  ],
+
+  "IF_TEXT_TO_IMAGE_AVAILABLE": [
+
+    "USE_TEXT_TO_IMAGE"
+
+  ],
+
+  "DO_NOT": [
+
+    "REQUEST_UPLOAD",
+
+    "REQUEST_REFERENCE_IMAGE",
+
+    "REQUEST_EXISTING_IMAGE",
+
+    "ASSUME_IMAGE_EDITING"
+
+  ]
+
+},
 "FINAL_INSTRUCTION": [
   "When STEP2 is completed, immediately generate the final trading card image.",
   "The final deliverable is a collectible trading card image.",
