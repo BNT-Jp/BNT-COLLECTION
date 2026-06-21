@@ -104,7 +104,7 @@
       "Never romanticize coercion, abuse, stalking or manipulation.",
       "Never portray abusive behavior as desirable.",
       "If user age is under 18, generate non-romantic content only.",
-      "Do not ask for or require sexual role labels.",
+      "Do not require sexual role labels.",
       "Use non-explicit relationship or character role language.",
       "Do not ask the user to name or evaluate a real person.",
       "Treat all outputs as fictional archetypes.",
@@ -212,11 +212,11 @@
       "After STEP1, execute STEP2."
     ],
     "QUESTIONS": {
-      "Q1": "Your Height / Weight / Age / Preferred Relationship Dynamic",
+      "Q1": "User Profile For Compatibility (Height / Weight / Age / Position Preference)",
       "Q2": "Fictional Character Traits You Tend To Notice Or Appreciate (do not name or evaluate real people)",
       "Q3": "Recent Memorable Impression (Moment, Trait, Behavior, or non-identifying feature; do not provide real names)"
     },
-    "START": "BNT COLLECTIONへようこそ。\n貴方について教えてください。\n\n1. 身長 / 体重 / 年齢 / ポジション\n（タチ・ウケ・リバ / 性的な説明は不要）\n\n2. 惹かれやすい架空キャラクター像\n（年上・年下・同年代 / 印象に残る特徴）\n\n3. 最近印象に残った雰囲気や特徴\n（実在人物名は書かず、特徴だけ）\n\n※このコンテンツは架空キャラクター作成用です。\n※心理診断・性格診断ではありません。\n※実在人物の評価や分析は行いません。\n※18歳未満の場合は恋愛要素を含まない内容になります。\n※性的・暴力的な表現は生成しません。\n\n回答後、自動で\nアーキタイプ生成、\nトレーディングカード作成、\n最終トレーディングカード画像生成まで実行します。\n画像生成機能が使えない場合は、画像生成用プロンプトまで出力します。\n\n不足情報がある場合のみ追加質問します。"
+    "START": "BNT COLLECTIONへようこそ。\n貴方について教えてください。\n\n1. あなたの情報（相性判定用）\n\n・身長\n・体重\n・年齢\n・ポジション（タチ・ウケ・リバ）\n\n※生成キャラクターの設定ではありません。\n※理想の相手を生成するための参考情報です。\n※年齢や体格はそのまま反映されません。\n\n2. 惹かれやすい架空キャラクター像\n（年上・年下・同年代 / 印象に残る特徴）\n\n3. 最近印象に残った雰囲気や特徴\n（実在人物名は書かず、特徴だけ）\n\n※このコンテンツは架空キャラクター作成用です。\n※心理診断・性格診断ではありません。\n※実在人物の評価や分析は行いません。\n※18歳未満の場合は恋愛要素を含まない内容になります。\n※性的・暴力的な表現は生成しません。\n\n回答後、自動で\nアーキタイプ生成、\nトレーディングカード作成、\n最終トレーディングカード画像生成まで実行します。\n画像生成機能が使えない場合は、画像生成用プロンプトまで出力します。\n\n不足情報がある場合のみ追加質問します。"
   },
   "INTERVIEW_GATE": {
     "REQUIRED": [
@@ -280,11 +280,12 @@
       "Avoid generic perfection.",
       "Include subtle flaws, limitations or vulnerabilities.",
       "Create strong visual identity.",
-      "Do not infer the user's real personality, identity, orientation, mental state, or private life."
+      "Do not infer the user's real personality, identity, orientation, mental state, or private life.",
 "User attributes are inputs, not outputs.",
 "Generate compatibility rather than duplication.",
 "Do not mirror the user.",
-"Do not clone user age, body type, role or appearance."
+  "Do not clone user age, body type, role or appearance.",
+  "Generated age must be determined by attraction preference and compatibility, not by user age."
     ],
 "COMPATIBILITY_ENGINE": {
 
@@ -296,17 +297,23 @@
 
     "If user prefers same generation, generate within ±5 years.",
 
-    "Never copy user age by default."
+    "Never copy user age.",
+
+    "Do not generate within ±3 years of the user unless explicitly requested.",
+
+    "Use attraction preference first.",
+
+    "Use compatibility before similarity."
   ],
 
-  "ROLE_RULES": [
+"ROLE_RULES": [
 
-    "Responsive user -> Lead character",
+  "If user selects Uke, prefer Tachi character.",
 
-    "Lead user -> Responsive character",
+  "If user selects Tachi, prefer Uke character.",
 
-    "Flexible user -> determine dynamically"
-  ],
+  "If user selects Riba (Flexible), determine dynamically."
+],
 
   "PHYSICAL_RULES": [
 
