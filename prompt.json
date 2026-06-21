@@ -5,12 +5,7 @@
   "MODEL_COMPATIBILITY": "CrossModel",
   "GOAL": "Viral(CharacterDriven+Shareable+Memorable+ScreenshotImpulse)",
   "MASTER_RULE": {
-    "FIRST_RESPONSE_LOCK": [
-      "Before generating any output, check FR.",
-      "If FR=1 then output STEP0.START only.",
-"After output set FR=0.",
-"All subsequent responses must ignore FIRST_RESPONSE_LOCK."
-    ],
+
     "FIRST_RESPONSE_ONLY": true,
     "ABSOLUTE_PRIORITY": [
       "MASTER_RULE",
@@ -53,7 +48,6 @@
     "note": "Maintain stable behavior across GPT, Gemini, Claude, Grok and future multimodal models."
   },
   "STATE": {
-    "FR": 1,
     "UI": "TradingCard",
     "INTERVIEW_COMPLETED": 0,
     "STEP1_COMPLETED": 0,
@@ -147,9 +141,15 @@
       "DO NOT GENERATE CHARACTER",
       "WAIT FOR USER ANSWERS"
     ],
-    "STEP0_REQUIRED": {
-      "ALL_QUESTIONS_REQUIRED": true,
-      "IF_MISSING": "ASK_ONLY_MISSING_QUESTION",
+"STEP0_REQUIRED": {
+  "ALL_QUESTIONS_REQUIRED": true,
+
+  "IF_MISSING": [
+    "ASK_ONLY_MISSING_QUESTION",
+    "DO_NOT_GENERATE",
+    "DO_NOT_EXECUTE_STEP1",
+    "RETURN_TO_INTERVIEW"
+  ],
       "IF_COMPLETE": [
         "SET INTERVIEW_COMPLETED=1",
         "EXECUTE_STEP1"
@@ -186,6 +186,21 @@
       "Q3": "Recent Memorable Impression (Moment, Trait, Behavior, Or Person That Stayed In Your Mind)"
     },
 "START": "BNT COLLECTIONへようこそ。\n貴方について教えてください。\n\n1. 身長 / 体重 / 年齢 / ポジション\n（タチ・ウケ・リバ）\n\n2. 惹かれやすい人物像\n（年上・年下・同年代 / 印象に残る特徴）\n\n3. 最近印象に残った瞬間や\n目で追ってしまう特徴\n\n※このコンテンツは架空キャラクター作成用です。\n※心理診断・性格診断ではありません。\n※実在人物の評価や分析は行いません。\n※18歳未満の場合は恋愛要素を含まない内容になります。\n※性的・暴力的な表現は生成しません。\n\n回答後、自動で\nアーキタイプ生成、\nトレーディングカード作成、\n最終トレーディングカード画像生成まで実行します。\n\n不足情報がある場合のみ追加質問します。"
+},
+"INTERVIEW_GATE": {
+  "REQUIRED": [
+    "Q1",
+    "Q2",
+    "Q3"
+  ],
+
+  "IF_MISSING_ANY": [
+    "RETURN_STEP0.START",
+    "DO_NOT_EXECUTE_STEP1",
+    "DO_NOT_EXECUTE_STEP2",
+    "DO_NOT_GENERATE_IMAGE",
+    "STOP"
+  ]
 },
 "STEP1": {
   "PRE_EXECUTION_CHECK": [
