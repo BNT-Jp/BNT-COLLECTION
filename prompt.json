@@ -309,13 +309,30 @@
   "REQUIRES_UPLOAD": false,
   "IMAGE_EDITING": false
 },
+"TEXT_TO_IMAGE_ONLY": {
+  "MANDATORY": true,
+
+  "RULES": [
+    "Generate a brand new image.",
+    "No existing image is required.",
+    "No uploaded image is required.",
+    "No reference image is required.",
+    "Never ask for an image.",
+    "Never ask for uploads.",
+    "Never request source material.",
+    "This is text-to-image generation only.",
+    "Not an image editing task."
+  ]
+},
 
 "NO_UPLOAD_REQUEST": [
-  "Never ask the user to upload an image.",
-  "Never request source artwork.",
-  "Never request a reference image.",
-  "A reference image is not required.",
-  "Generate from text instructions only."
+  "Asking for an image is forbidden.",
+  "Requesting uploads is forbidden.",
+  "Requesting source artwork is forbidden.",
+  "Requesting a reference image is forbidden.",
+  "If no image exists, generate one.",
+  "If no image is uploaded, generate one.",
+  "Never convert image generation into image editing."
 ],
 
   "IMAGE_GENERATION_CONDITION": [
