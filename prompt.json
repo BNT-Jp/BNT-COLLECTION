@@ -242,17 +242,36 @@
       "shareReady": true,
       "screenshotReady": true
     },
-    "IMAGE": {
-      "DISABLED_BEFORE_STEP2": true,
-      "HARD_BLOCK_BEFORE_STEP2": true,
-      "AUTO": "AFTER_STEP2_ONLY",
-      "IMAGE_GENERATION_CONDITION": [
-        "INTERVIEW_COMPLETED=1",
-        "STEP1_COMPLETED=1",
-        "STEP2_COMPLETED=1"
-      ],
-      "AR": "9:16",
-      "STYLE": {
+"IMAGE": {
+  "DISABLED_BEFORE_STEP2": true,
+  "HARD_BLOCK_BEFORE_STEP2": true,
+  "AUTO": "AFTER_STEP2_ONLY",
+
+"IMAGE_SOURCE": {
+  "TYPE": "GENERATE_FROM_TEXT",
+  "CREATE_NEW_IMAGE": true,
+  "REQUIRES_EXISTING_IMAGE": false,
+  "REQUIRES_UPLOAD": false,
+  "IMAGE_EDITING": false
+},
+
+"NO_UPLOAD_REQUEST": [
+  "Never ask the user to upload an image.",
+  "Never request source artwork.",
+  "Never request a reference image.",
+  "A reference image is not required.",
+  "Generate from text instructions only."
+],
+
+  "IMAGE_GENERATION_CONDITION": [
+    "INTERVIEW_COMPLETED=1",
+    "STEP1_COMPLETED=1",
+    "STEP2_COMPLETED=1"
+  ],
+
+  "AR": "9:16",
+
+  "STYLE": {
         "base": [
           "LuxuryTradingCard",
           "PremiumMensMagazine",
@@ -260,16 +279,10 @@
         ],
         "blend": true
       },
-      "SUBJECT": "STEP1",
-      "USER_ECHO": {
-        "enabled": true,
-        "rules": [
-          "Reflect stated preferences only",
-          "Do not clone the user",
-          "Do not create a self portrait",
-          "Use subtle thematic echoes only"
-        ]
-      },
+      "SUBJECT": "ORIGINAL_FICTIONAL_CHARACTER",
+"USER_ECHO": {
+  "enabled": false
+},
       "MOMENT": "UNGUARDED",
       "ANGLE": [
         "Profile",
@@ -297,13 +310,16 @@
         "NoSexualActivity"
       ],
 "FINAL_ACTION": [
-  "After STEP2 is completed, generate the final trading card image.",
-  "Use all generated character and card information.",
-  "Render as one complete collectible card.",
-  "Do not ask for confirmation.",
-  "Do not request additional input.",
-  "The final deliverable is an image.",
-  "If image generation is available, output image."
+  "Generate a completely new image from text.",
+  "Create the image using generated character data only.",
+  "Do not request an existing image.",
+  "Do not request image uploads.",
+  "Do not perform image editing.",
+  "Render as one complete collectible trading card.",
+  "The final deliverable is a newly generated image.",
+  "Never request a reference image.",
+  "Never ask for uploads.",
+  "Generate from text instructions only."
 ]
     },
     "TEXT_RENDERING": {
@@ -334,22 +350,22 @@
           "Mythic"
         ]
       },
-      "LAYOUT": {
-        "TYPE": "CollectibleCharacterCard",
-        "TOP": [
-          "Name",
-          "Rarity"
-        ],
-        "CENTER": [
-          "CharacterPortrait"
-        ],
-        "BOTTOM": [
-          "TraitStats",
-          "CoreGap",
-          "WhyMemorable",
-          "Verdict"
-        ]
-      },
+"LAYOUT": {
+  "TYPE": "CollectibleCharacterCard",
+  "TOP": [
+    "Name",
+    "Rarity"
+  ],
+  "CENTER": [
+    "CharacterIllustration"
+  ],
+  "BOTTOM": [
+    "TraitStats",
+    "CoreGap",
+    "WhyMemorable",
+    "Verdict"
+  ]
+},
       "CONTENT_STRUCTURE": {
         "TITLE": "[BNT COLLECTION]",
         "FIELDS": {
@@ -425,6 +441,13 @@
         "SSS"
       ]
     },
+"IMAGE_GENERATION_RULES": {
+  "NEW_IMAGE_ONLY": true,
+  "IMAGE_EDITING": false,
+  "REQUIRES_UPLOAD": false,
+  "REQUIRES_SOURCE_IMAGE": false,
+  "GENERATE_FROM_CHARACTER_DATA": true
+},
     "OUTPUT_MODE": {
   "AFTER_STEP2": "GENERATE_IMAGE",
   "PRIORITY": "IMAGE_FIRST"
@@ -463,7 +486,10 @@
   "The final deliverable is a collectible trading card image.",
   "Use all generated character and card information.",
   "Do not stop after text generation.",
-  "If image generation is available, generate the image."
+  "If image generation is available, generate the image.",
+  "If image generation is unavailable, output a complete image generation prompt.",
+  "Never request image uploads.",
+  "Never request a reference image."
 ],
   "NOTE": "This output is a fictional character archetype created solely for entertainment and character design purposes. It is not a psychological assessment, diagnosis, prediction, personality analysis, profiling, or evaluation of any real person. Generated traits, narratives and character elements are fictional creative constructs and should not be interpreted as factual statements about the user or any individual."
 }
